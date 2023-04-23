@@ -106,7 +106,6 @@ public class BPELDeployer implements TemplateInitializer {
                     (bpsProfileName, tenantId);
         }
         htName = processName + BPELDeployer.Constants.HT_SUFFIX;
-
         generateAndDeployArtifacts();
     }
 
