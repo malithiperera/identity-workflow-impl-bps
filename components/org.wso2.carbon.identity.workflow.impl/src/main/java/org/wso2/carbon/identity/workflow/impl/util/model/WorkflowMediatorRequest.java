@@ -24,9 +24,9 @@ import java.util.List;
  * Define the structure the of the common payload of workflow request
  */
 public class WorkflowMediatorRequest {
-    private String request_id;
-    private String workflow_iD;
-    private List<WorkflowVariable> workflow_Workflow_variables;
+    private String requestID;
+    private String workflowID;
+    private List<WorkflowVariable> workflowVariable;
 
 
 
@@ -34,34 +34,30 @@ public class WorkflowMediatorRequest {
     public WorkflowMediatorRequest() {
 
     }
-    public WorkflowMediatorRequest(String processDefinitionId, String workflow_iD, List<WorkflowVariable> workflow_Workflow_variables) {
-
-        this.request_id = processDefinitionId;
-        this.workflow_Workflow_variables = workflow_Workflow_variables;
-        this.workflow_iD = workflow_iD;
+    public WorkflowMediatorRequest(String processDefinitionId, String workflowID, List<WorkflowVariable> variables) {
+        this.requestID = processDefinitionId;
+        this.workflowVariable = variables;
+        this.workflowID = workflowID;
     }
 
-    public String getRequest_id() {
-
-        return request_id;
+    public String getRequestID() {
+        return requestID;
     }
 
-    public void setRequest_id(String processDefinitionId) {
-
-        this.request_id = processDefinitionId;
+    public void setRequestID(String processDefinitionId) {
+        this.requestID = processDefinitionId;
     }
 
-    public List<WorkflowVariable> getWorkflow_variables() {
-        return workflow_Workflow_variables;
+    public List<WorkflowVariable> getVariables() {
+        return workflowVariable;
     }
 
-    public void setWorkflow_variables(List<WorkflowVariable> workflow_Workflow_variables) {
-
-        this.workflow_Workflow_variables = workflow_Workflow_variables;
+    public void setWorkflowVariable(List<WorkflowVariable> variables) {
+        this.workflowVariable = variables;
     }
 
-    public void setWorkflow_iD(String workflowName) {
+    public void setWorkflowID(String workflowName) {
 
-        this.workflow_iD = workflowName;
+        this.workflowID = workflowName;
     }
 }

@@ -132,7 +132,7 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
     private WorkflowMediatorRequest createWorkflowRequest(OMElement messagePayload) throws WorkflowException {
 
         WorkflowMediatorRequest workFlowMediatorRequest = new WorkflowMediatorRequest();
-        workFlowMediatorRequest.setWorkflow_iD(getExternalWorkflowId(this.parameterList.get(0).getWorkflowId()));
+        workFlowMediatorRequest.setWorkflowID(getExternalWorkflowId(this.parameterList.get(0).getWorkflowId()));
         List<WorkflowVariable> parameterArray = new ArrayList<>();
 
         Iterator workflowDetails = messagePayload.getChildElements();
@@ -141,7 +141,7 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
             OMElementImpl workflowDetail = (OMElementImpl) workflowDetails.next();
             switch (workflowDetail.getLocalName()) {
                 case PROCESS_UUID:
-                    workFlowMediatorRequest.setRequest_id(workflowDetail.getText());
+                    workFlowMediatorRequest.setRequestID(workflowDetail.getText());
                 case TASK_INITIATOR:
                     WorkflowVariable workflowVariable = new WorkflowVariable(TASK_INITIATOR, workflowDetail.getText());
                     parameterArray.add(workflowVariable);
@@ -176,7 +176,7 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
                     }
             }
         }
-        workFlowMediatorRequest.setWorkflow_variables(parameterArray);
+        workFlowMediatorRequest.setWorkflowVariable(parameterArray);
 
         return workFlowMediatorRequest;
     }
