@@ -30,8 +30,8 @@ public class WorkflowConstant {
     public static final String TASK_INITIATOR = "taskInitiator";
     public static final String EVENT_TYPE = "eventType";
 
-    public static final String REQUEST_ID="REQUEST ID";
-
+    public static final String REQUEST_ID = "REQUEST ID";
+    public static final String  MEDIATOR_API_KEY = "API-Key";
     public static final String DESCRIPTION = "The operation should be approved by an authorized person with given " +
             "role, to complete.";
 
