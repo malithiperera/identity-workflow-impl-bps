@@ -71,9 +71,9 @@
           var abc = "<%=profileType%>";
    
 
-    if(abc == "External"){
+    if(abc == "WorkflowMediator"){
         
-    console.log("External")
+
     $(document).ready(function() {
         document.querySelector(".bps").style.display = 'none';
 
