@@ -159,7 +159,7 @@
         <span>Select Profile Type</span>
                                                                                                 <select id="myDropdown" onchange="handleChange(this)">
                                                                                                     <option value="BPS" selected>BPS</option>
-                                                                                                    <option value="WorkflowMediator">Workflow Mediator</option>
+                                                                                                    <option value="WorkflowMediator">Mediator</option>
                                                                                                 </select>
 
                                                                                               </div>

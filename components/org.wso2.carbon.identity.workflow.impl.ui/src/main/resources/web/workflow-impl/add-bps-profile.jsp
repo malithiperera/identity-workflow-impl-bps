@@ -44,8 +44,8 @@
             // validate input fields
             var formElement = document.getElementsByName("serviceAdd")[0];
             //if (!doValidateForm(formElement, "<fmt:message key="error.input.validation.error"/>")) {
-            //    return false;
-            //}
+             //  return false;
+           // }
 
             // submit the form if no errors encountered
             document.serviceAdd.submit();
@@ -89,7 +89,7 @@
                                                                                      <div style="padding:10px">
                                                                                         <select id="myDropdown" onchange="handleChange(this)">
                                                                                             <option value="BPS" selected>BPS</option>
-                                                                                            <option value="WorkflowMediator">Workflow Mediator</option>
+                                                                                            <option value="WorkflowMediator"> Mediator</option>
                                                                                         </select>
 
                                                                                       </div>
@@ -186,7 +186,7 @@
                     <tr>
                         <td width="30%">
                          <fmt:message key='workflow.bps.profile.apiKey'/>
-
+   <span class="required">*</span>
                         </td>
                             <td><input type="password" name="<%=WorkflowUIConstants.WORKFLOW_APIKEY%>"
                                                        label="<fmt:message key='workflow.bps.profile.auth.password'/>"
