@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com).
  *
@@ -24,7 +23,7 @@ import java.util.List;
 /**
  * Define the structure the of the common payload of workflow request
  */
-public class WorkFlowMediatorRequest {
+public class WorkflowMediatorRequest {
     private String request_id;
     private String workflow_iD;
     private List<WorkflowVariable> workflow_Workflow_variables;
@@ -32,10 +31,10 @@ public class WorkFlowMediatorRequest {
 
 
 
-    public WorkFlowMediatorRequest() {
+    public WorkflowMediatorRequest() {
 
     }
-    public WorkFlowMediatorRequest(String processDefinitionId, String workflow_iD, List<WorkflowVariable> workflow_Workflow_variables) {
+    public WorkflowMediatorRequest(String processDefinitionId, String workflow_iD, List<WorkflowVariable> workflow_Workflow_variables) {
 
         this.request_id = processDefinitionId;
         this.workflow_Workflow_variables = workflow_Workflow_variables;

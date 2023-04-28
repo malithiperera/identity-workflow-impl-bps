@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com).
  *
- * WSO2 Inc. licenses this file to you under the Apache License,
+ * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,8 +16,6 @@
  * under the License.
  */
 
-
-
 package org.wso2.carbon.identity.workflow.impl;
 
 import com.google.gson.Gson;
@@ -27,14 +25,13 @@ import org.apache.axiom.om.impl.llom.OMElementImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 import org.wso2.carbon.context.CarbonContext;
 import org.wso2.carbon.identity.workflow.impl.bean.BPSProfile;
 import org.wso2.carbon.identity.workflow.impl.internal.WorkflowImplServiceDataHolder;
 import org.wso2.carbon.identity.workflow.impl.util.WorkflowRequestBuilder;
 
 import org.wso2.carbon.identity.workflow.impl.util.model.WorkflowVariable;
-import org.wso2.carbon.identity.workflow.impl.util.model.WorkFlowMediatorRequest;
+import org.wso2.carbon.identity.workflow.impl.util.model.WorkflowMediatorRequest;
 import org.wso2.carbon.identity.workflow.mgt.bean.Parameter;
 import org.wso2.carbon.identity.workflow.mgt.dto.WorkflowRequest;
 import org.wso2.carbon.identity.workflow.mgt.exception.InternalWorkflowException;
@@ -43,7 +40,8 @@ import org.wso2.carbon.identity.workflow.mgt.util.WFConstant;
 import org.wso2.carbon.identity.workflow.mgt.util.WorkflowManagementUtil;
 import org.wso2.carbon.identity.workflow.mgt.workflow.WorkFlowExecutor;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -58,17 +56,14 @@ import static org.wso2.carbon.identity.workflow.impl.constant.WorkflowConstant.P
 import static org.wso2.carbon.identity.workflow.impl.constant.WorkflowConstant.REQUEST_ID;
 import static org.wso2.carbon.identity.workflow.impl.constant.WorkflowConstant.TASK_INITIATOR;
 import static org.wso2.carbon.identity.workflow.impl.constant.WorkflowConstant.WORKFLOW_PARAMETERS;
-
 import static javax.ws.rs.HttpMethod.POST;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
 
-    private static final Log log = LogFactory.getLog(WorkflowMediatorRequestExecutor.class);
+    private static final Log LOG = LogFactory.getLog(WorkflowMediatorRequestExecutor.class);
     private static final String EXECUTOR_NAME = "Workflow Mediator Request Executor";
-
     private static final Gson gson = new Gson();
-
     private List<Parameter> parameterList;
     private BPSProfile bpsProfile;
 
@@ -82,19 +77,18 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
     public void initialize(List<Parameter> parameterList) throws WorkflowException {
 
         this.parameterList = parameterList;
-
-        Parameter bpsProfileParameter = WorkflowManagementUtil
+        Parameter workflowProfileParameter = WorkflowManagementUtil
                 .getParameter(parameterList, WFImplConstant.ParameterName.BPS_PROFILE, WFConstant.ParameterHolder
                         .WORKFLOW_IMPL);
         int tenantId = CarbonContext.getThreadLocalCarbonContext().getTenantId();
-        if (bpsProfileParameter != null) {
-            String bpsProfileName = bpsProfileParameter.getParamValue();
+        if (workflowProfileParameter != null) {
+            String bpsProfileName = workflowProfileParameter.getParamValue();
             try {
                 bpsProfile = WorkflowImplServiceDataHolder.getInstance().getWorkflowImplService().getBPSProfile
                         (bpsProfileName, tenantId);
             } catch (WorkflowImplException e) {
-                String errorMsg = "Error occurred while reading bps profile, " + e.getMessage();
-                log.error(errorMsg);
+                String errorMsg = "Error occurred while reading workflow profile, " + e.getMessage();
+                LOG.error(errorMsg);
                 throw new WorkflowException(errorMsg, e);
             }
         }
@@ -107,7 +101,7 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
         OMElement requestBody = WorkflowRequestBuilder.buildXMLRequest(workFlowRequest, this.parameterList);
 
         try {
-            WorkFlowMediatorRequest workFlowMediatorRequest = createWorkflowRequest(requestBody);
+            WorkflowMediatorRequest workFlowMediatorRequest = createWorkflowRequest(requestBody);
             callMediator(gson.toJson(workFlowMediatorRequest));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -135,9 +129,9 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
 
     }
 
-    private WorkFlowMediatorRequest createWorkflowRequest(OMElement messagePayload) throws WorkflowException {
+    private WorkflowMediatorRequest createWorkflowRequest(OMElement messagePayload) throws WorkflowException {
 
-        WorkFlowMediatorRequest workFlowMediatorRequest = new WorkFlowMediatorRequest();
+        WorkflowMediatorRequest workFlowMediatorRequest = new WorkflowMediatorRequest();
         workFlowMediatorRequest.setWorkflow_iD(getExternalWorkflowId(this.parameterList.get(0).getWorkflowId()));
         List<WorkflowVariable> parameterArray = new ArrayList<>();
 
@@ -173,7 +167,8 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
                             while (parameterItemValues.hasNext()) {
                                 OMElementImpl parameterItemValue = (OMElementImpl) parameterItemValues.next();
                                 if (!REQUEST_ID.equals(parameterName)) {
-                                    workflowVariable = new WorkflowVariable(parameterName, parameterItemValue.getText());
+                                    workflowVariable =
+                                            new WorkflowVariable(parameterName, parameterItemValue.getText());
                                     parameterArray.add(workflowVariable);
                                 }
                             }
@@ -205,3 +200,4 @@ public class WorkflowMediatorRequestExecutor implements WorkFlowExecutor {
     }
 
 }
+
